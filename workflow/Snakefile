@@ -1,0 +1,33 @@
+# Main entrypoint of the workflow.
+
+
+# load configuration
+# -----------------------------------------------------
+configfile: "config/config.yaml"
+
+
+# load rules
+# -----------------------------------------------------
+include: "rules/common.smk"
+include: more rules as they are made
+
+
+# optional messages, log and error handling
+# -----------------------------------------------------
+onstart:
+    print("\n--- Analysis started ---\n")
+
+
+onsuccess:
+    print("\n--- Workflow finished! ---\n")
+
+
+onerror:
+    print("\n--- An error occurred :( ---\n")
+
+
+# target rules
+# -----------------------------------------------------
+rule all:
+    input: insert the key inputs to watch for changes that should trigger a workflow re run
+    default_target: True
