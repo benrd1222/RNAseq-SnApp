@@ -1,11 +1,12 @@
 # The rule to generate the actual differential expression 2025-10-17 14:34
-# TODO: Consider if write_results.smk needs to exist or just have the written results be part of the output to this rule
-
+#
+#TODO: I added the write results straight to this one so transfer over any outputs we want
+# monitored
 rule DESeq_run:
   input:
-    "../../results/dds.rds"
+    dds="../../results/dds.rds"
   output:
-    "../../results/deds.rds"
+    res_workable="../../results/res_workable.rds"
   params:
     "../../config/Extra_Params_from_config" #TODO: these should relate to the ways in which someone might want DESeq to perform the differential expression
   conda:

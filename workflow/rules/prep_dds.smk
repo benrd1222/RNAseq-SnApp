@@ -2,10 +2,13 @@
 # This will involve a rule for creation of the dds from counts and metadata
 # as well as a rule for updating a given preprocessed dds with extra metadata
 
+#TODO: figure out the passing of filepaths from one config file
+
 rule dds_from_counts:
   input:
     counts=#path_to_file.yaml,
-    meta="#path_to_file.yaml"
+    meta="#path_to_file.yaml",
+    formula="#path_to_file.yaml"
   output:
     dds="../../results/dds.rds",
   conda:
@@ -21,11 +24,18 @@ rule dds_from_counts:
 # I'm not sure on this implementation but there has to be a way to create a new dds if given a path to a counts file  
 # or to read a dds from another location if provided in the config
 
+#HACK: I believe this should just need to be an option for the output from
+# the nextflow piepline, so have a seperate input for this
+# is the metadata the same location... or do I name it something else to
+# ensure there is not confusion....
+# It should look the same in both cases
+
 # a rule to append metadata to dds from nextflow pipeline
 rule dds_update:
   input:
-    dds="../../results/dds.rds",
-    meta="#path_to_file.yaml"
+    nf_dds="../../results/deseq2.dds.Rdata",
+    meta="#path_to_file.yaml",
+    formula="#path_to_file.yaml"
   output:
     dds="../../results/dds.rds",
   conda:
