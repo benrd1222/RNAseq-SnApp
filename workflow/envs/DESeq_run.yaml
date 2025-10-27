@@ -1,0 +1,13 @@
+# Environment setup for DESeq2 run
+channels:
+  - conda-forge
+  - bioconda
+dependencies:
+  - r-base=4.5.1
+  - bioconductor-deseq2
+  - r-dplyr
+  - r-tidyr
+  - r-purr
+  - r-glue
+  - bioconductor-org.mm.eg.db
+  - bioconductor-biomart

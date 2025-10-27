@@ -1,5 +1,6 @@
 # Load libraries and data
 library(DESeq2)
+library(readr)
 
 # The data is called dds
 load(snakemake@input[['nf_dds']])

@@ -1,0 +1,10 @@
+# Environment management for both data read in scripts
+channels:
+  - conda-forge
+  - bioconda
+dependencies:
+  - r-base=4.5.1
+  - r-readr
+  - bioconductor-deseq2
+
+
