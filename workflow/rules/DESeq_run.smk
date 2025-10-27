@@ -4,11 +4,11 @@
 # monitored
 rule DESeq_run:
   input:
-    dds="../../results/dds.rds"
+    dds=f"{config['projdir']}/{config['resultsdir']}/dds.rds"
   output:
-    res_workable="../../results/res_workable.rds"
+    res_workable=f"{config['projdir']}/{config['resultsdir']}/deds.rds"
   params:
-    "../../config/Extra_Params_from_config" #TODO: these should relate to the ways in which someone might want DESeq to perform the differential expression
+    f"{config['paramname']}/" #TODO: these should relate to the ways in which someone might want DESeq to perform the differential expression
   conda:
     "../envs/DESeq_run.yaml"
   message:
