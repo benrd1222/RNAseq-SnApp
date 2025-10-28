@@ -12,6 +12,8 @@ The main issue I am trying to overcome is the software literacy hurdle for some 
   * Make a shortcut to the app on your desktop
   - Done now you have a regular windows-like desktop app
 
-Note that the envs is where the reproducible environments are set up which may not be necessary if I use a Docker container 
+I have ran up against a wall in developing this for my lab as WSL may be a requirement to have any of the reproducibility aspects of the project.
 
-I would also note that the config section is where the config.yaml that controls the overall workflow will be located as well as any sort of samplesheet.
+The solution is to migrate this to the cluster and focus on it being a useable workflow in that context and then work on the Application side after that.
+
+May still investigate how to get docker running easily for lab use to make the application useable on there desktop computers
