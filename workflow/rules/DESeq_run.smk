@@ -7,8 +7,8 @@ rule DESeq_run:
     dds=f"{config['projdir']}/{config['resultsdir']}/dds.rds"
   output:
     res_workable=f"{config['projdir']}/{config['resultsdir']}/deds.rds"
-  params:
-    f"{config['paramname']}/" #TODO: these should relate to the ways in which someone might want DESeq to perform the differential expression
+  # params:
+    # f"{config['paramname']}/" #TODO: these should relate to the ways in which someone might want DESeq to perform the differential expression
   conda:
     "../envs/DESeq_run.yaml"
   message:

@@ -26,7 +26,7 @@ meta <- meta[, -1]
 
 # Grabbing the formula from some config path
 formula_path <- snakemake@input[["formula"]]
-formula <- fromula(readLines(formula_path, n=1))
+formula <- formula(readLines(formula_path, n=1))
 
 # rownames and colnames must be in the same order for DESeq so....
 counts <- counts[, sort(colnames(counts))]

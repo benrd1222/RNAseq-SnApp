@@ -8,8 +8,8 @@ configfile: "config/config.yaml"
 
 # load rules
 # -----------------------------------------------------
-include: "rules/common.smk"
-include: more rules as they are made
+include: "rules/prep_dds.smk"
+include: "rules/DESeq_run.smk"
 
 
 # optional messages, log and error handling
@@ -28,10 +28,10 @@ onerror:
 
 # target rules
 # -----------------------------------------------------
-# It is key to understand if updating specific parts of a config can be looked at a cause only certain rules to rerun
+# It is key to understand if updating specific parts of a config can be looked at and cause only certain rules to rerun
 # that might be what needs to be executed in this snakefile-
 # like if the formula the counts, meta, or formula are changed we rerun from DESeq_run
 # but if the color palette for the PCA is changed we only rerun that rule.
 rule all:
-    input: insert the key inputs to watch for changes that should trigger a workflow re run
+    input: f"{config['projdir']}/{config['resultsdir']}/deds.rds"
     default_target: True

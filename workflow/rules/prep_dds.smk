@@ -8,7 +8,7 @@ rule dds_from_counts:
   input:
     counts=f"{config['projdir']}/{config['counts']}",
     meta=f"{config['projdir']}/{config['meta']}",
-    formula=f"{config['formula']}"
+    formula=f"{config['projdir']}/{config['formula']}"
   output:
     dds=f"{config['projdir']}/{config['resultsdir']}/dds.rds"
   conda:
@@ -35,7 +35,7 @@ rule dds_update:
   input:
     nf_dds=f"{config['projdir']}/{config['nf_dds']}",
     meta=f"{config['projdir']}/{config['meta']}",
-    formula=f"{config['formula']}"
+    formula=f"{config['projdir']}/{config['formula']}"
   output:
     dds=f"{config['projdir']}/{config['resultsdir']}/dds.rds"
   conda:
