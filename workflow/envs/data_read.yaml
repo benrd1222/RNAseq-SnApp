@@ -2,8 +2,9 @@
 channels:
   - conda-forge
   - bioconda
+  - defaults
 dependencies:
-  - r-base=4.5.1
+  - r-base
   - r-readr
   - bioconductor-deseq2
 

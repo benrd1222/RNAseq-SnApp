@@ -2,12 +2,13 @@
 channels:
   - conda-forge
   - bioconda
+  - defaults
 dependencies:
-  - r-base=4.5.1
+  - r-base
   - bioconductor-deseq2
   - r-dplyr
   - r-tidyr
-  - r-purr
+  - r-purrr
   - r-glue
   - bioconductor-org.mm.eg.db
   - bioconductor-biomart
