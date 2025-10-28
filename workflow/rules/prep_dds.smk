@@ -12,17 +12,13 @@ rule dds_from_counts:
   output:
     dds=f"{config['projdir']}/{config['resultsdir']}/dds.rds"
   conda:
-    "../envs/dds_from_counts.yaml"
+    "../envs/data_read.yaml"
   message:
     """--- converting data to DESeq Data Structure ---"""
   log:
     "../../results/prep_dds/dds_from_counts.log", #TODO: consider timestamping logs?
   script:
     "../scripts/counts_to_dds.R"
-
-# some intermediate rule that checks for an existing dds or path to dds from nextflow
-# I'm not sure on this implementation but there has to be a way to create a new dds if given a path to a counts file  
-# or to read a dds from another location if provided in the config
 
 #HACK: I believe this should just need to be an option for the output from
 # the nextflow piepline, so have a seperate input for this
@@ -39,7 +35,7 @@ rule dds_update:
   output:
     dds=f"{config['projdir']}/{config['resultsdir']}/dds.rds"
   conda:
-    "../envs/dds_from_nextflow.yaml"
+    "../envs/data_read.yaml"
   message:
     """--- Updating dds with metadata ---"""
   log:

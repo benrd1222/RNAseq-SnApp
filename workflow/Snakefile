@@ -8,8 +8,8 @@ configfile: "config/config.yaml"
 
 # load rules
 # -----------------------------------------------------
-include: "rules/prep_dds.smk"
-include: "rules/DESeq_run.smk"
+include: "./rules/prep_dds.smk"
+include: "./rules/DESeq_run.smk"
 
 
 # optional messages, log and error handling
@@ -33,5 +33,7 @@ onerror:
 # like if the formula the counts, meta, or formula are changed we rerun from DESeq_run
 # but if the color palette for the PCA is changed we only rerun that rule.
 rule all:
-    input: f"{config['projdir']}/{config['resultsdir']}/deds.rds"
-    default_target: True
+  input:
+    dds=f"{config['projdir']}/{config['resultsdir']}/dds.rds",
+    res_workable=f"{config['projdir']}/{config['resultsdir']}/deds.rds"
+  default_target: True
