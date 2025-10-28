@@ -28,10 +28,6 @@ onerror:
 
 # target rules
 # -----------------------------------------------------
-# It is key to understand if updating specific parts of a config can be looked at and cause only certain rules to rerun
-# that might be what needs to be executed in this snakefile-
-# like if the formula the counts, meta, or formula are changed we rerun from DESeq_run
-# but if the color palette for the PCA is changed we only rerun that rule.
 rule all:
   input:
     dds=f"{config['projdir']}/{config['resultsdir']}/dds.rds",

@@ -6,6 +6,8 @@
 # to have the workflow look at a different location to keep track of the project
 # importantly we need to see where the .snakefiles get saved and see if
 # launching the same conda environment through an app will allow for easy project switching
+#
+# snakefiles are saved to this location to remember the run so this idea is probably not the best way of running it
 
 # Project location
 projdir: "C:/Users/benjad/OneDrive - Michigan Medicine/Projects/RNAseq-SnApp"
