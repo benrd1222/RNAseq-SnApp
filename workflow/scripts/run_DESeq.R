@@ -3,8 +3,7 @@
 library(DESeq2)
 library(dplyr)
 library(tidyr)
-library(purr)
-library(glue)
+library(purrr)
 library("org.Mm.eg.db")
 library("biomaRt")
 
