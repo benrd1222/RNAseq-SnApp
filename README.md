@@ -12,8 +12,10 @@ The main issue I am trying to overcome is the software literacy hurdle for some 
   * Make a shortcut to the app on your desktop
   - Done now you have a regular windows-like desktop app
 
-I have ran up against a wall in developing this for my lab as WSL may be a requirement to have any of the reproducibility aspects of the project.
+Figuring out containerization with docker, should be easy enough because the installation can be streamlined for lab use.
 
-The solution is to migrate this to the cluster and focus on it being a useable workflow in that context and then work on the Application side after that.
+I am now figuring out if I want the workflow to be run within the container or to just use the container for the rule environments. Next steps are testing containerization setup with a simple docker test locally, then running the first basic utility tests of the workflow, and then creating some unit tests before moving on to visualization and automation of reports.
 
-May still investigate how to get docker running easily for lab use to make the application useable on there desktop computers
+After all of the above will come the design of the application, essentially a GUI to help edit the config.yaml.
+  * The key things to consider with docker is if containerization of the application seems useful for the end user
+  * If I do end up containerizing the application I thought that it would be useful to design the app around interacting with projects. The idea being that the application interacts with the local host through projects on their machine, so it will either be able to create a new project essentially just defining a workspace on the host machine and then setting up docker volumes and the config.yaml or working with previously run projects where it should work like a regular snakemake workflow that remembers what has been updated and runs the relevant rules to update the outputs.
