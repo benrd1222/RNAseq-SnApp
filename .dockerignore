@@ -1,0 +1,13 @@
+# not entirely sure how docker deals with I/O may ned to let it see the results directory to write to it
+results/** 
+resources/**
+logs/**
+# the snakemake files may need to be available within the conatiner?
+.snakemake
+.snakemake/**
+.test/results/*
+**/.Rhistory
+**/*.Rproj
+**/.Rproj.user/**
+**/.RData
+TODO.txt
