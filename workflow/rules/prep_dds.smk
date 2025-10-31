@@ -6,17 +6,15 @@
 
 rule dds_from_counts:
   input:
-    counts=f"{config['projdir']}/{config['counts']}",
-    meta=f"{config['projdir']}/{config['meta']}",
-    formula=f"{config['projdir']}/{config['formula']}"
+    counts="resources/data_small.csv",
+    meta="resources/meta.csv",
+    formula="resources/formula.txt"
   output:
-    dds=f"{config['projdir']}/{config['resultsdir']}/dds.rds"
-  conda:
-    "../envs/data_read.yaml"
+    dds="results/dds.rds"
   message:
     """--- converting data to DESeq Data Structure ---"""
   log:
-    "../../results/prep_dds/dds_from_counts.log", #TODO: consider timestamping logs?
+    "results/prep_dds/dds_from_counts.log", #TODO: consider timestamping logs?
   script:
     "../scripts/counts_to_dds.R"
 
@@ -29,17 +27,15 @@ rule dds_from_counts:
 # a rule to append metadata to dds from nextflow pipeline
 rule dds_update:
   input:
-    nf_dds=f"{config['projdir']}/{config['nf_dds']}",
-    meta=f"{config['projdir']}/{config['meta']}",
-    formula=f"{config['projdir']}/{config['formula']}"
+    nf_dds="resources/nf_dds.rds",
+    meta="resources/meta.csv",
+    formula="resources/formula.txt"
   output:
-    dds=f"{config['projdir']}/{config['resultsdir']}/dds.rds"
-  conda:
-    "../envs/data_read.yaml"
+    dds="results/dds.rds"
   message:
     """--- Updating dds with metadata ---"""
   log:
-    "../../results/prep_dds/dds_from_nextflow.log",
+    "results/prep_dds/dds_from_nextflow.log",
   script:
     "../scripts/update_dds.R"
 

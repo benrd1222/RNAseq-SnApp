@@ -2,10 +2,26 @@
 library(DESeq2)
 library(readr)
 
+# Setting up debugging support
+log_file <- snakemake@log[[1]]
+
+log <- file(log_file, open = "wt")
+
+# Redirect messages and errors
+sink(log, type = "output") 
+sink(log, type = "message")
+
+print("Beginning amendment of nfcore dds object with use metadata")
+
+
 # The data is called dds
 load(snakemake@input[['nf_dds']])
 
 meta <- readr::read_delim(snakemake@input[["meta"]])
+meta <- as.data.frame(lapply(meta, as.factor))
+
+#HACK: This is also assuming that the metadata is in the same order of samples as output by nfcore, not a great assumption
+# could be better to left_join(.by=rownames)
 
 # append metadata other than the sample names onto the dds for the nextflow pathway
 # Works assuming that the first column of meta is the sample names
@@ -18,7 +34,18 @@ for(i in 1:ncol(meta)-1){
 colnames(dds@colData)[,-c(1,2)] <- colnames(meta[,-1])
 
 #attach the user design
-design(dds) <- formula(snakemake@input[["formula"]])
+formula_path <- snakemake@input[["formula"]]
+formula <- formula(readLines(formula_path, n=1))
+
+design(dds) <- formula
 
 # output
 saveRDS(dds, snakemake@output[["dds"]])
+
+#Closing out logging
+print("Preperation of dds complete")
+
+# Close out logging
+sink(type = "message")
+sink(type = "output")
+close(log)

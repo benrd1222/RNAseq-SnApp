@@ -1,2 +1,0 @@
-# Only need snakemake as of now
-snakemake

@@ -7,6 +7,18 @@ library(purrr)
 library("org.Mm.eg.db")
 library("biomaRt")
 
+# Setting up debugging support
+log_file <- snakemake@log[[1]]
+
+log <- file(log_file, open = "wt")
+
+# Redirect messages and errors
+sink(log, type = "output") 
+sink(log, type = "message")
+
+print("Starting preperation of dds")
+
+# Reading in snakemake input
 dds <- readRDS(snakemake@input[["dds"]])
 
 # Run DESeq2 ------
@@ -17,7 +29,7 @@ smallestGroupSize <- 5
 dds <- dds[rowSums(counts(dds) >= 10) >= smallestGroupSize, ]
 
 deds <- DESeq(dds)
-
+saveRDS(deds, snakemake@output[["deds"]])
 
 # Extracting results ----
 # extract all possible combination of results names to compare then 
@@ -58,6 +70,11 @@ gc()
 mgi_df <- data.frame(
   'mgi_symbol' = rownames(as.data.frame(res_list[[1]]))
 )
+
+#BUG: full_join is broken in the test datset as the names: one of these doesn't exist
+print(gene_annotations)
+print(mgi_df)
+
 genes_annot <- full_join(mgi_df, gene_annotations, by = "mgi_symbol") |>
   group_by(mgi_symbol) |>
   summarise(
@@ -137,3 +154,11 @@ names(res_workable) <- results_deds_names
 
 #Need any outputs for visualization attached here
 saveRDS(res_workable, snakemake@output[["res_workable"]])
+
+# Closing out logging
+print("DESeq2 run succesful- main matrix saved in results/deds.rds workable results list or visualization saved in results/res_workable.rds")
+
+# Close out logging
+sink(type = "message")
+sink(type = "output")
+close(log)

@@ -1,6 +1,10 @@
 # Main entrypoint of the workflow.
 
 
+#Learning about filepath references in snakemake I now know that the working directory is
+# wherever snakemake cmd is executed, this is the base file path for input: output: log:
+# while the input to script: is relative to the rule being executed
+
 # load configuration
 # -----------------------------------------------------
 configfile: "config/config.yaml"
@@ -8,8 +12,8 @@ configfile: "config/config.yaml"
 
 # load rules
 # -----------------------------------------------------
-include: "./rules/prep_dds.smk"
-include: "./rules/DESeq_run.smk"
+include: "rules/prep_dds.smk"
+include: "rules/DESeq_run.smk"
 
 
 # optional messages, log and error handling
@@ -30,6 +34,6 @@ onerror:
 # -----------------------------------------------------
 rule all:
   input:
-    dds=f"{config['projdir']}/{config['resultsdir']}/dds.rds",
-    res_workable=f"{config['projdir']}/{config['resultsdir']}/deds.rds"
+    dds="results/dds.rds",
+    res_workable="results/deds.rds"
   default_target: True

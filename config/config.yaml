@@ -1,6 +1,9 @@
 # Main config to direct workflow to user data
 # also intending for this to be editable through a GUI later
 
+# I think this config file is mainly unimportant to the general workflow setup and testing
+# will only be important if I want an app
+
 #TODO:
 # This solution involves rewriting the hardcoded output of the snakemake
 # to have the workflow look at a different location to keep track of the project
