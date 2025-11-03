@@ -9,3 +9,4 @@ logs/**
 **/.Rproj.user/**
 **/.RData
 TODO.txt
+.Rproj.user

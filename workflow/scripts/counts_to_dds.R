@@ -9,7 +9,7 @@ log_file <- snakemake@log[[1]]
 log <- file(log_file, open = "wt")
 
 # Redirect messages and errors
-sink(log, type = "output") 
+sink(log, type = "output")
 sink(log, type = "message")
 
 print("Starting preperation of dds")
@@ -25,7 +25,7 @@ print("Starting preperation of dds")
 counts <- readr::read_delim(snakemake@input[["counts"]])
 annot_gene_info <- as.data.frame(counts[, 1:4])
 counts <- as.data.frame(counts[, -(1:4)])
-rownames(counts) <- annot_gene_info[, 1]
+rownames(counts) <- annot_gene_info[, 3]
 counts <- as.matrix(counts)
 
 # cleaning and reading in the metadata
@@ -40,7 +40,7 @@ meta <- meta[, -1]
 
 # Grabbing the formula from some config path
 formula_path <- snakemake@input[["formula"]]
-formula <- formula(readLines(formula_path, n=1))
+formula <- formula(readLines(formula_path, n = 1))
 print(formula)
 print(colnames(counts))
 print("-----")
@@ -50,9 +50,11 @@ counts <- counts[, sort(colnames(counts))]
 meta <- meta[sort(rownames(meta)), ]
 
 # Converting our counts and meta matrices into a DESeq compatible dataset
-dds  <-  DESeq2::DESeqDataSetFromMatrix(countData=counts,
-                                 colData=meta,
-                                 design= formula)
+dds <- DESeq2::DESeqDataSetFromMatrix(
+  countData = counts,
+  colData = meta,
+  design = formula
+)
 
 saveRDS(dds, snakemake@output[["dds"]])
 
