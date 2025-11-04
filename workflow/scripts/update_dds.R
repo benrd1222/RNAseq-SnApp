@@ -8,7 +8,7 @@ log_file <- snakemake@log[[1]]
 log <- file(log_file, open = "wt")
 
 # Redirect messages and errors
-sink(log, type = "output") 
+sink(log, type = "output")
 sink(log, type = "message")
 
 print("Beginning amendment of nfcore dds object with use metadata")
@@ -26,16 +26,16 @@ meta <- as.data.frame(lapply(meta, as.factor))
 # append metadata other than the sample names onto the dds for the nextflow pathway
 # Works assuming that the first column of meta is the sample names
 # and that the output from ncore has not been touched
-for(i in 1:ncol(meta)-1){
-  dds@colData[,2+i] <- meta[,i]
+for (i in 1:ncol(meta) - 1) {
+  dds@colData[, 2 + i] <- meta[, i]
 }
 
 # make sure we reain column names
-colnames(dds@colData)[,-c(1,2)] <- colnames(meta[,-1])
+colnames(dds@colData)[, -c(1, 2)] <- colnames(meta[, -1])
 
 #attach the user design
 formula_path <- snakemake@input[["formula"]]
-formula <- formula(readLines(formula_path, n=1))
+formula <- formula(readLines(formula_path, n = 1))
 
 design(dds) <- formula
 
@@ -45,7 +45,6 @@ saveRDS(dds, snakemake@output[["dds"]])
 #Closing out logging
 print("Preperation of dds complete")
 
-# Close out logging
 sink(type = "message")
 sink(type = "output")
 close(log)

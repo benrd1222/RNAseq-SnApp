@@ -4,17 +4,6 @@
 # I think this config file is mainly unimportant to the general workflow setup and testing
 # will only be important if I want an app
 
-#TODO:
-# This solution involves rewriting the hardcoded output of the snakemake
-# to have the workflow look at a different location to keep track of the project
-# importantly we need to see where the .snakefiles get saved and see if
-# launching the same conda environment through an app will allow for easy project switching
-#
-# snakefiles are saved to this location to remember the run so this idea is probably not the best way of running it
-
-# Project location
-projdir: "C:/Users/benjad/OneDrive - Michigan Medicine/Projects/RNAseq-SnApp"
-
 # Inputs
 counts: "resources/data_small.csv"
 meta: "resources/meta.csv"
@@ -24,5 +13,7 @@ formula: "resources/formula.txt"
 # Params
 # a location for extra parameters with reasonable defaults to fill out later
 
-#Outputs
+
+# Outputs
+# output directory seperate from the workflow location
 resultsdir: "results"

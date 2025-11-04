@@ -35,6 +35,7 @@ rownames(meta) <- meta[, 1]
 meta <- meta[, -1]
 
 #TODO: Consider how to deal with releveling factors in the metadata
+# likely a prameter that needs to be chosen
 
 # Set reference levels for the different covariates
 
