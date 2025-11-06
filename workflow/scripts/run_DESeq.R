@@ -1,4 +1,4 @@
-# Load libraries and data
+# Load libraries and data ----
 
 library(DESeq2)
 library(tidyverse)
@@ -7,21 +7,20 @@ library("biomaRt")
 
 print("Starting preperation of dds")
 
-# Ensure directories exist for saving
+# Ensure directories exist for saving ----
 directories <- c(
-  "./results",
   "./results/data"
 )
 
 if (all(dir.exists(directories)) != TRUE) {
   for (i in 1:length(directories)) {
     if (!dir.exists(directories[i])) {
-      dir.create(directories[i])
+      dir.create(directories[i], recursive = TRUE)
     }
   }
 }
 
-# Reading in snakemake input
+# Reading in snakemake input ----
 dds <- readRDS(snakemake@input[["dds"]])
 
 # Run DESeq2 ------

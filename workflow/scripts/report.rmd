@@ -1,0 +1,35 @@
+---
+title: "RNAseq Report"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+# Header
+
+An informative summary of some of the data
+
+```{r}
+# Read in the data and present a few summary statistics
+results <- readRDS("results/res_workable.rds")
+for (i in deds) {
+  # DESEq2 had some built in summary feature I used in a previous analysis
+}
+```
+
+# Header
+
+Insert the volcano plots or with an parameter from the snakemake pipeline only 
+user defined plots
+
+Heatmaps might be a good idea to add in to the workflow people generally like to
+present them
+
+# Header
+
+Similar section for the GSEA
+
+## Subheader
+
+A smaller section with ORA and Venn Diagram stuff that will be optional
