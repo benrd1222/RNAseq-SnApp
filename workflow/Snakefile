@@ -14,7 +14,8 @@ configfile: "config/config.yaml"
 # -----------------------------------------------------
 include: "rules/prep_dds.smk"
 include: "rules/DESeq_run.smk"
-include: "rules/PCA_make.smk"
+include: "rules/clustering.smk"
+inclue: "rules/basic_vis.smk"
 
 # optional messages, log and error handling
 # -----------------------------------------------------
