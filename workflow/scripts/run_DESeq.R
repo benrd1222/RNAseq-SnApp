@@ -5,15 +5,6 @@ library(tidyverse)
 library("org.Mm.eg.db")
 library("biomaRt")
 
-# Setting up debugging support
-log_file <- snakemake@log[[1]]
-
-log <- file(log_file, open = "wt")
-
-# Redirect messages and errors
-sink(log, type = "output")
-sink(log, type = "message")
-
 print("Starting preperation of dds")
 
 # Ensure directories exist for saving
@@ -29,11 +20,12 @@ if (all(dir.exists(directories)) != TRUE) {
     }
   }
 }
+
 # Reading in snakemake input
 dds <- readRDS(snakemake@input[["dds"]])
 
 # Run DESeq2 ------
-#TODO: add snakemake@Extra_Params_from_config that will hold defaults that can
+# TODO: add snakemake@Extra_Params_from_config that will hold defaults that can
 # optionally be changed
 
 smallestGroupSize <- 5
@@ -53,7 +45,7 @@ res_list <- map(results_deds_names, ~ results(deds, name = .x))
 names(res_list) <- results_deds_names
 
 # Mapping annotations to genes
-#TODO: Make a more streamlined mapping of a set of annotation to each MGI in our
+# TODO: Make a more streamlined mapping of a set of annotation to each MGI in our
 # actual data set
 
 ensembl <- biomaRt::useEnsembl(
@@ -80,7 +72,7 @@ gc()
 # Now we map back the found descriptions to the genes
 
 mgi_df <- data.frame(
-  'mgi_symbol' = rownames(as.data.frame(res_list[[1]]))
+  "mgi_symbol" = rownames(as.data.frame(res_list[[1]]))
 )
 
 genes_annot <- full_join(mgi_df, gene_annotations, by = "mgi_symbol") |>
@@ -90,7 +82,7 @@ genes_annot <- full_join(mgi_df, gene_annotations, by = "mgi_symbol") |>
   ) |>
   ungroup()
 
-#TODO: Functionality of xy chromosome filter- need to also make this dependent on snakemake@params
+# TODO: Functionality of xy chromosome filter- need to also make this dependent on snakemake@params
 
 # if (rm_xy == TRUE) {
 #   genes_annot <- genes_annot |>
@@ -100,27 +92,27 @@ genes_annot <- full_join(mgi_df, gene_annotations, by = "mgi_symbol") |>
 genes_annot <- as.data.frame(genes_annot)
 rownames(genes_annot) <- genes_annot$mgi_symbol
 
-#TODO: Consider if these outputs should be snakemake@output[['named_entry']]
+# TODO: Consider if these outputs should be snakemake@output[['named_entry']]
 # raw
 paths <- paste0("./results/data/", results_deds_names, ".csv")
 tmp <- map(
   res_list,
-  ~ merge(as.data.frame(.x), genes_annot, by = 'row.names', all = FALSE)
+  ~ merge(as.data.frame(.x), genes_annot, by = "row.names", all = FALSE)
 )
 walk2(tmp, paths, write.csv)
 mgi_df <- merge(
   as.data.frame(res_list[[1]]),
   genes_annot,
-  by = 'row.names',
+  by = "row.names",
   all = FALSE
 )
 
-#filtered
+# filtered
 res_list_filtered <- map(res_list, ~ .x[.x$padj < 0.05 & !is.na(.x$padj), ])
 
 tmp <- map(
   res_list_filtered,
-  ~ merge(as.data.frame(.x), genes_annot, by = 'row.names', all = FALSE)
+  ~ merge(as.data.frame(.x), genes_annot, by = "row.names", all = FALSE)
 )
 
 paths_filtered <- str_glue(
@@ -145,7 +137,7 @@ cutoff <- 1
 res_workable <- list()
 for (i in 1:length(res_list_filtered)) {
   tmp <- as.data.frame(res_list_filtered[[i]])
-  tmp <- merge(tmp, genes_annot, by = 'row.names', all = FALSE)
+  tmp <- merge(tmp, genes_annot, by = "row.names", all = FALSE)
 
   tmp <- tmp |>
     mutate(
@@ -162,15 +154,10 @@ for (i in 1:length(res_list_filtered)) {
 
 names(res_workable) <- results_deds_names
 
-#Need any outputs for visualization attached here
+# Need any outputs for visualization attached here
 saveRDS(res_workable, snakemake@output[["res_workable"]])
 
 # Closing out logging
 print(
   "DESeq2 run succesful- main matrix saved in results/deds.rds workable results list or visualization saved in results/res_workable.rds"
 )
-
-# Close out logging
-sink(type = "message")
-sink(type = "output")
-close(log)

@@ -1,27 +1,12 @@
+print("Beginning creation of PCA")
+
 # Load libraries ----
 library(DESeq2)
 library(ggplot2)
-library(ggrepel)
-library(circlize)
-library(gridtext)
-library(clusterProfiler)
-
-# Start Logs ----
-log_file <- snakemake@log[[1]]
-
-log <- file(log_file, open = "wt")
-
-# Redirect messages and errors
-sink(log, type = "output")
-sink(log, type = "message")
-
-print("Beginning creation of PCA")
+library(tidyverse)
 
 # Read in snakemake inputs ----
 deds <- readRDS(snakemake@input[['deds']])
-
-#testing
-deds <- readRDS("./results/deds.rds")
 
 # Clustering -------
 
@@ -43,7 +28,7 @@ PCA_plot_all <- DESeq2::plotPCA(
   rld_all,
   intgroup = p.intgroup,
   returnData = TRUE,
-  ntop = pca_top
+  ntop = p.top
 )
 percentVar <- round(100 * attr(PCA_plot_all, "percentVar"))
 
@@ -90,10 +75,3 @@ PCA_group <- ggplot(
   )
 
 ggsave(snakemake@output[['PCA']], plot = PCA_group, width = 15, height = 15)
-
-#Closing out logging
-print("PCA created")
-
-sink(type = "message")
-sink(type = "output")
-close(log)

@@ -2,18 +2,6 @@
 library(DESeq2)
 library(readr)
 
-# Setting up debugging support
-log_file <- snakemake@log[[1]]
-
-log <- file(log_file, open = "wt")
-
-# Redirect messages and errors
-sink(log, type = "output")
-sink(log, type = "message")
-
-print("Beginning amendment of nfcore dds object with use metadata")
-
-
 # The data is called dds
 load(snakemake@input[['nf_dds']])
 
@@ -44,7 +32,3 @@ saveRDS(dds, snakemake@output[["dds"]])
 
 #Closing out logging
 print("Preperation of dds complete")
-
-sink(type = "message")
-sink(type = "output")
-close(log)

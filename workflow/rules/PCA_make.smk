@@ -1,18 +1,13 @@
 # Rule for creation of PCA
 
-rule name:
+rule PCA_make:
   input:
     deds="results/deds.rds"
-  ouput:
+  output:
     PCA="results/PCA.jpg"
-# params:
-    # f"{config['paramname']}" 
-    # color palette
-    # interest group
-    # ggplot overide code
   message:
     """--- Running ordination and visualizing with PCA ---"""
   log:
-    "results/.logs/rule_name.log",
+    "results/.logs/PCA_make.log",
   script:
     "../scripts/make_PCA.R"
